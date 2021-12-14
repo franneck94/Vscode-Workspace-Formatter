@@ -70,6 +70,7 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() {
   disposeItem(runOnContextMenuDisposable);
   disposeItem(commandRunDisposable);
+  disposeItem(eventConfigurationDisposable);
 }
 
 function loadGlobalExcludeSettings() {

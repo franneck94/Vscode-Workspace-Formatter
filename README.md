@@ -34,7 +34,7 @@ Per default, there is no include filter.
 For example, if you only want to format typescript files in your workspace, you could add the following glob pattern:
 
 ```json
-Workspace_Formatter.includePattern: ["*.ts"]
+"Workspace_Formatter.includePattern": ["*.ts"]
 ```
 
 ### Exclude Folders for Selection
@@ -45,7 +45,7 @@ Per default, all folders and files starting with a *"."* are excluded, also all 
 For example, if you want to skip formatting for javascript files in your workspace, you could add the following glob pattern:
 
 ```json
-Workspace_Formatter.excludePattern: ["*.js"]
+"Workspace_Formatter.excludePattern": ["*.js"]
 ```
 
 ### Extension Settings

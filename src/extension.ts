@@ -5,18 +5,24 @@ import {
 	getDirectoriesRecursive,
 	replaceBackslashes,
 } from './utils/fileUtils';
-import { disposeItem, getSettingsValue } from './utils/vscodeUtils';
+import {
+	disposeItem,
+	getExtensionSetting,
+	getGlobalSetting,
+} from './utils/vscodeUtils';
 
 let runOnContextMenuDisposable: vscode.Disposable | undefined;
 let commandRunDisposable: vscode.Disposable | undefined;
 let eventConfigurationDisposable: vscode.Disposable | undefined;
 
+const DEFAULT_GLOBAL_EXCLUDE: string[] = [];
 const DEFAULT_EXCLUDE_PATTERN: string[] = ['**/build', '**/.*', '**/.vscode'];
 const DEFAULT_INCLUDE_PATTERN: string[] = ['**/*'];
 const DEFAULT_SHOW_FORMATTING: boolean = false;
 const DEFAULT_SAVE_FORMAT: boolean = true;
 const DEFAULT_CLOSE_FORMAT: boolean = false;
 
+const globalExclude: string[] = DEFAULT_GLOBAL_EXCLUDE;
 let excludePattern: string[] = DEFAULT_EXCLUDE_PATTERN;
 let includePattern: string[] = DEFAULT_INCLUDE_PATTERN;
 let showFormatting: boolean = DEFAULT_SHOW_FORMATTING;
@@ -53,6 +59,7 @@ export function activate(context: vscode.ExtensionContext) {
   extensionPath = context.extensionPath;
   extensionState = context.workspaceState;
 
+  loadGlobalExcludeSettings();
   loadSettings();
 
   initRunStatusBar();
@@ -65,12 +72,38 @@ export function deactivate() {
   disposeItem(commandRunDisposable);
 }
 
+function loadGlobalExcludeSettings() {
+  const globalExcludeObj = getGlobalSetting(
+    'files.exclude',
+    DEFAULT_GLOBAL_EXCLUDE,
+  );
+
+  const globalExcludeKeys = Object.keys(globalExcludeObj);
+
+  for (const key of globalExcludeKeys) {
+    if (globalExcludeObj[key] === true) {
+      globalExclude.push(key);
+    }
+  }
+
+  excludePattern.push(...globalExclude);
+}
+
 function loadSettings() {
-  showFormatting = getSettingsValue('showFormatting', DEFAULT_SHOW_FORMATTING);
-  saveAfterFormat = getSettingsValue('saveAfterFormat', DEFAULT_SAVE_FORMAT);
-  closeAfterSave = getSettingsValue('closeAfterSave', DEFAULT_CLOSE_FORMAT);
-  includePattern = getSettingsValue('includePattern', DEFAULT_INCLUDE_PATTERN);
-  excludePattern = getSettingsValue('excludePattern', DEFAULT_EXCLUDE_PATTERN);
+  showFormatting = getExtensionSetting(
+    'showFormatting',
+    DEFAULT_SHOW_FORMATTING,
+  );
+  saveAfterFormat = getExtensionSetting('saveAfterFormat', DEFAULT_SAVE_FORMAT);
+  closeAfterSave = getExtensionSetting('closeAfterSave', DEFAULT_CLOSE_FORMAT);
+  includePattern = getExtensionSetting(
+    'includePattern',
+    DEFAULT_INCLUDE_PATTERN,
+  );
+  excludePattern = getExtensionSetting(
+    'excludePattern',
+    DEFAULT_EXCLUDE_PATTERN,
+  );
 }
 
 function initConfigurationChangeDisposable() {

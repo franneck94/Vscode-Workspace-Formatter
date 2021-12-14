@@ -1,24 +1,9 @@
 import * as fs from 'fs';
-import * as JSON5 from 'json5';
 import * as minimatch from 'minimatch';
 import * as path from 'path';
 
 export function replaceBackslashes(text: string) {
   return text.replace(/\\/g, '/');
-}
-
-export function filterOnString(names: string[], filterName: string) {
-  return names.filter((name) => !name.includes(filterName));
-}
-
-export function pathExists(filepath: string) {
-  try {
-    fs.accessSync(filepath);
-  } catch (err) {
-    return false;
-  }
-
-  return true;
 }
 
 export function getDirectoriesRecursive(
@@ -118,17 +103,4 @@ export function foldersInDir(
   }
 
   return folderNames;
-}
-
-export function readJsonFile(filepath: string) {
-  let configJson: any | undefined;
-
-  try {
-    const fileContent = fs.readFileSync(filepath, 'utf-8');
-    configJson = JSON5.parse(fileContent);
-  } catch (err) {
-    return undefined;
-  }
-
-  return configJson;
 }

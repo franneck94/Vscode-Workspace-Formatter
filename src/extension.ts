@@ -25,7 +25,6 @@ const DEFAULT_CLOSE_FORMAT: boolean = false;
 const globalExclude: string[] = DEFAULT_GLOBAL_EXCLUDE;
 let excludePattern: string[] = DEFAULT_EXCLUDE_PATTERN;
 let includePattern: string[] = DEFAULT_INCLUDE_PATTERN;
-let showFormatting: boolean = DEFAULT_SHOW_FORMATTING;
 let saveAfterFormat: boolean = DEFAULT_SAVE_FORMAT;
 let closeAfterSave: boolean = DEFAULT_CLOSE_FORMAT;
 
@@ -91,10 +90,6 @@ function loadGlobalExcludeSettings() {
 }
 
 function loadSettings() {
-  showFormatting = getExtensionSetting(
-    'showFormatting',
-    DEFAULT_SHOW_FORMATTING,
-  );
   saveAfterFormat = getExtensionSetting('saveAfterFormat', DEFAULT_SAVE_FORMAT);
   closeAfterSave = getExtensionSetting('closeAfterSave', DEFAULT_CLOSE_FORMAT);
   includePattern = getExtensionSetting(
@@ -219,31 +214,31 @@ function formatAllFiles(files: string[]) {
           progress.report({
             message: `${i + 1}/${files.length}`,
           });
-          if (showFormatting) {
-            // @ts-ignore
-            await vscode.window.showTextDocument(file, {
-              preserveFocus: false,
-              preview: true,
-            });
-          }
+          const document: vscode.TextDocument = await vscode.workspace.openTextDocument(
+            file,
+          );
+          await vscode.window.showTextDocument(document, {
+            preserveFocus: false,
+            preview: true,
+          });
           await vscode.commands.executeCommand(
             'editor.action.formatDocument',
-            file,
+            document.uri,
           );
           if (saveAfterFormat) {
             await vscode.commands.executeCommand(
               'workbench.action.files.save',
-              file,
+              document.uri,
             );
           }
-          if (showFormatting && closeAfterSave) {
+          if (closeAfterSave) {
             await vscode.commands.executeCommand(
               'workbench.action.closeActiveEditor',
-              file,
+              document.uri,
             );
           }
         } catch (exception) {
-          vscode.window.showWarningMessage(`Could not format file ${file}`);
+          console.log(`Could not format file ${file}`);
         }
         progress.report({
           increment: increment,

@@ -47,12 +47,20 @@ export function filesInDir(
     .filter((file) => file.isFile())
     .map((file) => replaceBackslashes(file.name));
 
+  if (files.length === 0) return [];
+
   if (includePattern.length > 0) {
-    files = includePatternFromList(includePattern, files);
+    files = includePatternFromList(includePattern, files, false);
   }
 
   if (excludePattern.length > 0) {
-    files = excludePatternFromList(excludePattern, files);
+    files = excludePatternFromList(excludePattern, files, false);
+  }
+
+  if (files.length > 0) {
+    files = files.map((file: string) =>
+      replaceBackslashes(path.join(dir, file)),
+    );
   }
 
   return files;
@@ -61,20 +69,36 @@ export function filesInDir(
 export function includePatternFromList(
   excludeSearch: string[],
   stringList: string[],
+  isFolders: boolean = true,
 ) {
+  let result: string[] = [];
+
   for (const pattern of excludeSearch) {
-    stringList = stringList.filter((str) => minimatch(str, pattern));
+    if (isFolders && pattern.includes('/')) {
+      result.push(...stringList.filter((str) => minimatch(str, pattern)));
+    } else if (!isFolders && !pattern.includes('/')) {
+      result.push(...stringList.filter((str) => minimatch(str, pattern)));
+    }
   }
 
-  return stringList;
+  if (isFolders && result.length === 0) {
+    result = stringList;
+  }
+
+  return result;
 }
 
 export function excludePatternFromList(
   excludeSearch: string[],
   stringList: string[],
+  isFolders: boolean = true,
 ) {
   for (const pattern of excludeSearch) {
-    stringList = stringList.filter((str) => !minimatch(str, pattern));
+    if (isFolders && pattern.includes('/')) {
+      stringList = stringList.filter((str) => !minimatch(str, pattern));
+    } else if (!isFolders && !pattern.includes('/')) {
+      stringList = stringList.filter((str) => !minimatch(str, pattern));
+    }
   }
 
   return stringList;
@@ -94,12 +118,14 @@ export function foldersInDir(
     replaceBackslashes(path.join(dir.toString(), folder.name)),
   );
 
+  if (folderNames.length === 0) return [];
+
   if (includePattern.length > 0) {
-    folderNames = includePatternFromList(includePattern, folderNames);
+    folderNames = includePatternFromList(includePattern, folderNames, true);
   }
 
   if (excludePattern.length > 0) {
-    folderNames = excludePatternFromList(excludePattern, folderNames);
+    folderNames = excludePatternFromList(excludePattern, folderNames, true);
   }
 
   return folderNames;

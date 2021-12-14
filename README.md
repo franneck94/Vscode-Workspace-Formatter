@@ -52,9 +52,8 @@ For example, if you want to skip formatting for javascript files in your workspa
 
 - ⚙️ Glob pattern to include from the folder selection (defaults to ["\*"])
 - ⚙️ Glob pattern to exclude from the folder selection (defaults to ["\*\*\/build", "\*\*/.\*", "\*\*/.vscode"])
-- ⚙️ Whether to open the currently formatted file (defaults to false)
 - ⚙️ Whether to save the currently formatted file (defaults to true)
-- ⚙️ Whether to close the currently formatted file. Only used, if *showFormatting* is active (defaults to true)
+- ⚙️ Whether to close the currently formatted file. Only used (defaults to true)
 
 ## Release Notes
 

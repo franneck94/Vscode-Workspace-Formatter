@@ -2,7 +2,7 @@
   "name": "workspace-formatter",
   "displayName": "Workspace Formatter",
   "description": "🔧 Format all your files in a workspace with one click. 🔧",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "franneck94",
   "license": "MIT",
   "icon": "icon.png",
@@ -81,12 +81,6 @@
           "description": "List glob patterns to exclude for formatting.",
           "scope": "resource"
         },
-        "Workspace_Formatter.showFormatting": {
-          "type": "boolean",
-          "default": false,
-          "description": "Whether to open the currently formatted file.",
-          "scope": "resource"
-        },
         "Workspace_Formatter.saveAfterFormat": {
           "type": "boolean",
           "default": true,
@@ -96,7 +90,7 @@
         "Workspace_Formatter.closeAfterSave": {
           "type": "boolean",
           "default": true,
-          "description": "Whether to close the currently formatted file. Only used, if *showFormatting* is active",
+          "description": "Whether to close the currently formatted file.",
           "scope": "resource"
         }
       }

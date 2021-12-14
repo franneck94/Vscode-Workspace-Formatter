@@ -1,5 +1,13 @@
 # Pro Formatter Change Log
 
+## Version 0.1.4: December 14, 2021
+
+- **Info**: Updated icon
+
+## Version 0.1.3: December 14, 2021
+
+- **Info**: Updated icon
+
 ## Version 0.1.2: December 14, 2021
 
 - **Bugfix**: Fixed file path bug

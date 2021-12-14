@@ -2,7 +2,7 @@
   "name": "workspace-formatter",
   "displayName": "Workspace Formatter",
   "description": "🔧 Format all your files in a workspace with one click. 🔧",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "publisher": "franneck94",
   "license": "MIT",
   "icon": "icon.png",

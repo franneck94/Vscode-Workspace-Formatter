@@ -2,7 +2,7 @@
   "name": "workspace-formatter",
   "displayName": "Workspace Formatter",
   "description": "🔧 Format all your files in a workspace with one click. 🔧",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "franneck94",
   "license": "MIT",
   "icon": "icon.png",
@@ -62,7 +62,7 @@
     "configuration": {
       "type": "object",
       "title": "Workspace Formatter",
-      "Workspaceperties": {
+      "properties": {
         "Workspace_Formatter.includePattern": {
           "type": "array",
           "default": ["**/*"],

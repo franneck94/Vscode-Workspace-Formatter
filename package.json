@@ -41,20 +41,13 @@
     "commands": [
       {
         "command": "Workspace_Formatter.runOnWorkspace",
-        "title": "Run Folder",
+        "title": "Run",
         "category": "Workspace Formatter"
       },
       {
         "command": "Workspace_Formatter.runOnContextMenu",
-        "title": "Workspace Formatter: Select Directory",
+        "title": "Format Directory",
         "category": "Workspace Formatter"
-      }
-    ],
-    "keybindings": [
-      {
-        "command": "Workspace_Formatter.runOnWorkspace",
-        "key": "ctrl+alt+f",
-        "mac": "ctrl+alt+f"
       }
     ],
     "menus": {

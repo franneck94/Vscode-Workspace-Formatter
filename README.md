@@ -2,7 +2,8 @@
 
 🔧 Format all your files in a workspace with one click. 🔧
 
-You can also add include and exclude patterns to manage which files and directories should be formatted.
+You can define include and exclude patterns to manage which files and directories should be formatted.  
+Besides that, you can also select only certain directories to format with the context menu.
 
 ## Example
 
@@ -10,11 +11,15 @@ You can also add include and exclude patterns to manage which files and director
 
 ## How to use: Format the whole workspace
 
-...
+1. Open the command palette (F1)
+2. Run the command: *Workspace Formatter: Run*
+3. All files will be formatted w.r.t the include/exclude patterns
 
 ## How to use: Only format selected directories
 
-...
+1. Select any folder in the context menu, by right-clicking
+2. Run the context-menu command: *Format Directory*
+3. All files will be formatted w.r.t the include/exclude patterns
 
 ## Extension Features
 
@@ -23,29 +28,25 @@ For more information about glob patterns see [here](https://en.wikipedia.org/wik
 
 ### Include Folders for Selection
 
-You can add glob patterns to Include folders from the search to shorten the list.
+You can add glob patterns to include folder and file names.  
+Per default, there is no include filter.
 
-For example with the following glob pattern:
+For example, if you only want to format typescript files in your workspace, you could add the following glob pattern:
 
-![IncludePattern](./media/IncludePattern.png)
-
-The folder selection would change from left to right.
-
-![IncludePaths1](./media/IncludePaths1.png)
-![IncludePaths2](./media/IncludePaths2.png)
+```json
+Workspace_Formatter.includePattern: ["*.ts"]
+```
 
 ### Exclude Folders for Selection
 
-You can add glob patterns to exclude folders from the search to shorten the list.
+You can add glob patterns to exclude folder and file names.
+Per default, all folders and files starting with a *.* are excluded, also all directories that are called *build*.
 
-For example with the following glob pattern:
+For example, if you want to skip formatting for javascript files in your workspace, you could add the following glob pattern:
 
-![ExcludePattern](./media/excludePattern.png)
-
-The folder selection would change from left to right.
-
-![ExcludePaths1](./media/excludePaths1.png)
-![ExcludePaths2](./media/excludePaths2.png)
+```json
+Workspace_Formatter.excludePattern: ["*.js"]
+```
 
 ### Extension Settings
 

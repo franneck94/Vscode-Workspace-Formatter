@@ -9,6 +9,7 @@ import { disposeItem, getSettingsValue } from './utils/vscodeUtils';
 
 let runOnContextMenuDisposable: vscode.Disposable | undefined;
 let commandRunDisposable: vscode.Disposable | undefined;
+let eventConfigurationDisposable: vscode.Disposable | undefined;
 
 const DEFAULT_EXCLUDE_PATTERN: string[] = ['**/build', '**/.*', '**/.vscode'];
 const DEFAULT_INCLUDE_PATTERN: string[] = ['**/*'];
@@ -56,6 +57,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   initRunStatusBar();
   initContextMenuDisposable();
+  initConfigurationChangeDisposable();
 }
 
 export function deactivate() {
@@ -69,6 +71,20 @@ function loadSettings() {
   closeAfterSave = getSettingsValue('closeAfterSave', DEFAULT_CLOSE_FORMAT);
   includePattern = getSettingsValue('includePattern', DEFAULT_INCLUDE_PATTERN);
   excludePattern = getSettingsValue('excludePattern', DEFAULT_EXCLUDE_PATTERN);
+}
+
+function initConfigurationChangeDisposable() {
+  if (eventConfigurationDisposable) return;
+
+  eventConfigurationDisposable = vscode.workspace.onDidChangeConfiguration(
+    (e: vscode.ConfigurationChangeEvent) => {
+      const isChanged = e.affectsConfiguration(EXTENSION_NAME);
+
+      if (isChanged) loadSettings();
+    },
+  );
+
+  extensionContext?.subscriptions.push(eventConfigurationDisposable);
 }
 
 function initContextMenuDisposable() {

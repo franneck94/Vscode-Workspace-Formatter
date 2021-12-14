@@ -39,8 +39,8 @@ Workspace_Formatter.includePattern: ["*.ts"]
 
 ### Exclude Folders for Selection
 
-You can add glob patterns to exclude folder and file names.
-Per default, all folders and files starting with a *.* are excluded, also all directories that are called *build*.
+You can add glob patterns to exclude folder and file names.  
+Per default, all folders and files starting with a *"."* are excluded, also all directories that are called *build*.
 
 For example, if you want to skip formatting for javascript files in your workspace, you could add the following glob pattern:
 

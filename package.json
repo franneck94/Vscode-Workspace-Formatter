@@ -29,7 +29,7 @@
     "url": "https://github.com/franneck94/vscode-Workspace-formatter/issues"
   },
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "main": "./dist/main",
   "contributes": {

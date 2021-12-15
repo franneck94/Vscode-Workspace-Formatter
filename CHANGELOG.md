@@ -1,5 +1,9 @@
 # Pro Formatter Change Log
 
+## Version 0.1.5: December 15, 2021
+
+- **Bugfix**: Fixed bug for includePattern
+
 ## Version 0.1.4: December 14, 2021
 
 - **Info**: Updated icon

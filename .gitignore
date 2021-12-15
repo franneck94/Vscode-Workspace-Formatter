@@ -5,6 +5,8 @@ build/
 .mypy_cache
 .vscode-test
 
+test/testAssets/
+
 package-lock.json
 
 **/.vscode/tasks.json

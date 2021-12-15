@@ -76,7 +76,7 @@ export function includePatternFromList(
   for (const pattern of excludeSearch) {
     if (isFolders && pattern.includes('/')) {
       result.push(...stringList.filter((str) => minimatch(str, pattern)));
-    } else if (!isFolders && !pattern.includes('/')) {
+    } else if (!isFolders) {
       result.push(...stringList.filter((str) => minimatch(str, pattern)));
     }
   }

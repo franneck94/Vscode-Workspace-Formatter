@@ -6,10 +6,10 @@ export function disposeItem(disposableItem: vscode.Disposable | undefined) {
   disposableItem?.dispose();
 }
 
-export function getExtensionSetting(name: string, defaultValue: any) {
-  const settingName: string = `${EXTENSION_NAME}.${name}`;
+export function getExtensionSetting(name_: string, defaultValue: any) {
+  const name: string = `${EXTENSION_NAME}.${name_}`;
 
-  const settingsValue = vscode.workspace.getConfiguration().get(settingName);
+  const settingsValue = vscode.workspace.getConfiguration().get(name);
 
   if (settingsValue === undefined) {
     return defaultValue;
@@ -19,9 +19,7 @@ export function getExtensionSetting(name: string, defaultValue: any) {
 }
 
 export function getGlobalSetting(name: string, defaultValue: any) {
-  const settingName: string = name;
-
-  const settingsValue = vscode.workspace.getConfiguration().get(settingName);
+  const settingsValue = vscode.workspace.getConfiguration().get(name);
 
   if (settingsValue === undefined) {
     return defaultValue;

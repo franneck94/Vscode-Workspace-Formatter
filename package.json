@@ -65,7 +65,7 @@
       "properties": {
         "Workspace_Formatter.includePattern": {
           "type": "array",
-          "default": ["**/*"],
+          "default": ["*"],
           "items": {
             "type": "string"
           },

@@ -65,7 +65,9 @@
       "properties": {
         "Workspace_Formatter.includePattern": {
           "type": "array",
-          "default": ["*"],
+          "default": [
+            "*"
+          ],
           "items": {
             "type": "string"
           },
@@ -74,7 +76,11 @@
         },
         "Workspace_Formatter.excludePattern": {
           "type": "array",
-          "default": ["**/build", "**/.*", "**/.vscode"],
+          "default": [
+            "**/build",
+            "**/.*",
+            "**/.vscode"
+          ],
           "items": {
             "type": "string"
           },

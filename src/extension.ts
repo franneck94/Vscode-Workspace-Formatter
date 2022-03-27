@@ -169,14 +169,16 @@ function initRunStatusBar() {
 }
 
 function getAllFiles(startingDirectory: string) {
-  const allDirectories = getDirectoriesRecursive(
+  let allDirectories = getDirectoriesRecursive(
     startingDirectory,
     includePattern,
     excludePattern,
   );
   allDirectories?.push(replaceBackslashes(startingDirectory));
 
-  if (!allDirectories) return;
+  if (!allDirectories) {
+    allDirectories = [startingDirectory];
+  }
 
   const allFiles: string[] = [];
 

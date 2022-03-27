@@ -1,5 +1,9 @@
 # Pro Formatter Change Log
 
+## Version 0.1.6: March 27, 2022
+
+- **Bugfix**: Fixed bug for formatting a directory which had no sub directories
+
 ## Version 0.1.5: December 15, 2021
 
 - **Bugfix**: Fixed bug for includePattern

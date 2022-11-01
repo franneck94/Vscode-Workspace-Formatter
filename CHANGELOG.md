@@ -1,5 +1,9 @@
 # Pro Formatter Change Log
 
+## Version 0.1.7: Nov 1, 2022
+
+- **Info**: Added PayPal donation link
+
 ## Version 0.1.6: March 27, 2022
 
 - **Bugfix**: Fixed bug for formatting a directory which had no sub directories

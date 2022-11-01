@@ -2,7 +2,7 @@
   "name": "workspace-formatter",
   "displayName": "Workspace Formatter",
   "description": "🔧 Format all your files in a workspace with one click. 🔧",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "publisher": "franneck94",
   "license": "MIT",
   "icon": "icon.png",
@@ -11,7 +11,7 @@
     "theme": "dark"
   },
   "engines": {
-    "vscode": "^1.65.0"
+    "vscode": "^1.71.0"
   },
   "categories": [
     "Formatters"

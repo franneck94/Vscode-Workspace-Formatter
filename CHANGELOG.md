@@ -1,5 +1,9 @@
 # Pro Formatter Change Log
 
+## Version 1.0.0: Jul 11, 2023
+
+- **Info**: Fixed bug where already opened files were closed
+
 ## Version 0.1.7: Nov 1, 2022
 
 - **Info**: Added PayPal donation link

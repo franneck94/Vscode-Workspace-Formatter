@@ -2,7 +2,7 @@
   "name": "workspace-formatter",
   "displayName": "Workspace Formatter",
   "description": "🔧 Format all your files in a workspace with one click. 🔧",
-  "version": "0.1.7",
+  "version": "1.0.0",
   "publisher": "franneck94",
   "license": "MIT",
   "icon": "icon.png",
@@ -11,7 +11,7 @@
     "theme": "dark"
   },
   "engines": {
-    "vscode": "^1.77.0"
+    "vscode": "^1.78.0"
   },
   "categories": [
     "Formatters"
@@ -106,10 +106,9 @@
     "webpack": "webpack --mode development",
     "webpack-watch": "webpack --mode development --watch",
     "vscode:prepublish": "npm run webpack",
-    "compile": "npm run webpack",
+    "compile": "set NODE_OPTIONS=--openssl-legacy-provider && npm run webpack",
     "compile-watch": "npm run webpack-watch",
-    "watch": "tsc -watch -p ./",
-    "lint": "eslint src --ext ts"
+    "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",

@@ -1,14 +1,15 @@
+import * as fs from 'fs';
 import * as vscode from 'vscode';
 
 import {
-	filesInDir,
-	getDirectoriesRecursive,
-	replaceBackslashes,
+  filesInDir,
+  getDirectoriesRecursive,
+  replaceBackslashes,
 } from './utils/fileUtils';
 import {
-	disposeItem,
-	getExtensionSetting,
-	getGlobalSetting,
+  disposeItem,
+  getExtensionSetting,
+  getGlobalSetting,
 } from './utils/vscodeUtils';
 
 let runOnContextMenuDisposable: vscode.Disposable | undefined;
@@ -168,6 +169,19 @@ function initRunStatusBar() {
   extensionContext?.subscriptions.push(commandRunDisposable);
 }
 
+function getOpenedFiles(): Set<string> {
+  const openedFiles = new Set<string>();
+  vscode.workspace.textDocuments.forEach((document) => {
+    if (!document.isClosed) {
+      const filename = document.fileName.toString();
+      if (fs.existsSync(filename)) {
+        openedFiles.add(replaceBackslashes(filename));
+      }
+    }
+  });
+  return openedFiles;
+}
+
 function getAllFiles(startingDirectory: string) {
   let allDirectories = getDirectoriesRecursive(
     startingDirectory,
@@ -197,6 +211,8 @@ function formatAllFiles(files: string[]) {
     title: 'Formatting files',
     cancellable: true,
   };
+
+  const openedFiles = getOpenedFiles();
 
   vscode.window.withProgress(
     progressOptions,
@@ -233,6 +249,11 @@ function formatAllFiles(files: string[]) {
             );
           }
           if (closeAfterSave) {
+            const filename = replaceBackslashes(document.fileName.toString());
+            if (openedFiles.has(filename)) {
+              continue;
+            }
+
             await vscode.commands.executeCommand(
               'workbench.action.closeActiveEditor',
               document.uri,

@@ -17,7 +17,7 @@ let commandRunDisposable: vscode.Disposable | undefined;
 let eventConfigurationDisposable: vscode.Disposable | undefined;
 
 const DEFAULT_GLOBAL_EXCLUDE: string[] = [];
-const DEFAULT_EXCLUDE_PATTERN: string[] = ['**/build', '**/.*', '**/.vscode'];
+const DEFAULT_EXCLUDE_PATTERN: string[] = ['**/build','**/node_modules', '**/.*', '**/.vscode'];
 const DEFAULT_INCLUDE_PATTERN: string[] = ['*'];
 const DEFAULT_SAVE_FORMAT: boolean = true;
 const DEFAULT_CLOSE_FORMAT: boolean = false;

@@ -1,5 +1,9 @@
 # Pro Formatter Change Log
 
+## Version 1.1.0: Feb 14, 2024
+
+- **Info**: Added node_modules to default exclude
+
 ## Version 1.0.0: Jul 11, 2023
 
 - **Info**: Fixed bug where already opened files were closed

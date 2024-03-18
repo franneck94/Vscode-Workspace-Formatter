@@ -2,6 +2,10 @@
 
 🔧 Format all your files in a workspace with one click. 🔧
 
+[![Visual Studio Marketplace](https://img.shields.io/visual-studio-marketplace/v/franneck94.workspace-formatter?label=VS%20Marketplace&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=franneck94.workspace-formatter)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/franneck94.workspace-formatter?label=Installs)](https://marketplace.visualstudio.com/items?itemName=franneck94.workspace-formatter)
+[![License](https://img.shields.io/github/license/franneck94/Vscode-Workspace-Formatter?label=License)](https://github.com/franneck94/Vscode-Workspace-Formatter/blob/master/LICENSE)
+
 You can define include and exclude patterns to manage which files and directories should be formatted.  
 Besides that, you can also select only certain directories to format with the context menu.
 

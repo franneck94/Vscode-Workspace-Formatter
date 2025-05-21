@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import {
   filesInDir,
   getDirectoriesRecursive,
+  isIgnoredByGitignore,
   replaceBackslashes,
 } from './utils/fileUtils';
 import {
@@ -188,23 +189,43 @@ function getOpenedFiles(): Set<string> {
 }
 
 function getAllFiles(startingDirectory: string) {
+  console.log(`Getting all files from: ${startingDirectory}`);
+
+  // Get workspace root for .gitignore filtering
+  const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '';
+
+  // Get all directories recursively
   let allDirectories = getDirectoriesRecursive(
     startingDirectory,
     includePattern,
     excludePattern,
   );
-  allDirectories?.push(replaceBackslashes(startingDirectory));
 
-  if (!allDirectories) {
-    allDirectories = [startingDirectory];
+  // Add the starting directory itself
+  const normalizedStartingDir = replaceBackslashes(startingDirectory);
+  if (allDirectories) {
+    if (!allDirectories.includes(normalizedStartingDir)) {
+      allDirectories.push(normalizedStartingDir);
+    }
+  } else {
+    allDirectories = [normalizedStartingDir];
   }
 
-  const allFiles: string[] = [];
+  // Filter out directories that are ignored by .gitignore
+  if (workspaceRoot) {
+    allDirectories = allDirectories.filter(dir => !isIgnoredByGitignore(dir, workspaceRoot));
+  }
 
+  console.log(`Found ${allDirectories.length} directories to process`);
+
+  // Get all files from all directories
+  const allFiles: string[] = [];
   allDirectories.forEach((dir) => {
-    allFiles.push(...filesInDir(dir, includePattern, excludePattern));
+    const filesInDirectory = filesInDir(dir, includePattern, excludePattern);
+    allFiles.push(...filesInDirectory);
   });
 
+  console.log(`Found ${allFiles.length} files to format`);
   return allFiles;
 }
 

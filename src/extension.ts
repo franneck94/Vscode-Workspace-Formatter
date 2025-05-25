@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import {
   filesInDir,
   getDirectoriesRecursive,
+  isIgnoredByGitignore,
   replaceBackslashes,
 } from './utils/fileUtils';
 import {
@@ -188,23 +189,43 @@ function getOpenedFiles(): Set<string> {
 }
 
 function getAllFiles(startingDirectory: string) {
+  console.log(`Getting all files from: ${startingDirectory}`);
+
+  // Get workspace root for .gitignore filtering
+  const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '';
+
+  // Get all directories recursively
   let allDirectories = getDirectoriesRecursive(
     startingDirectory,
     includePattern,
     excludePattern,
   );
-  allDirectories?.push(replaceBackslashes(startingDirectory));
 
-  if (!allDirectories) {
-    allDirectories = [startingDirectory];
+  // Add the starting directory itself
+  const normalizedStartingDir = replaceBackslashes(startingDirectory);
+  if (allDirectories) {
+    if (!allDirectories.includes(normalizedStartingDir)) {
+      allDirectories.push(normalizedStartingDir);
+    }
+  } else {
+    allDirectories = [normalizedStartingDir];
   }
 
-  const allFiles: string[] = [];
+  // Filter out directories that are ignored by .gitignore
+  if (workspaceRoot) {
+    allDirectories = allDirectories.filter(dir => !isIgnoredByGitignore(dir, workspaceRoot));
+  }
 
+  console.log(`Found ${allDirectories.length} directories to process`);
+
+  // Get all files from all directories
+  const allFiles: string[] = [];
   allDirectories.forEach((dir) => {
-    allFiles.push(...filesInDir(dir, includePattern, excludePattern));
+    const filesInDirectory = filesInDir(dir, includePattern, excludePattern);
+    allFiles.push(...filesInDirectory);
   });
 
+  console.log(`Found ${allFiles.length} files to format`);
   return allFiles;
 }
 
@@ -255,14 +276,30 @@ function formatAllFiles(files: string[]) {
           }
           if (closeAfterSave) {
             const filename = replaceBackslashes(document.fileName.toString());
+
+            // Don't close files that were already open before formatting
             if (openedFiles.has(filename)) {
+              console.log(`Skipping close for already open file: ${filename}`);
               continue;
             }
 
-            await vscode.commands.executeCommand(
-              'workbench.action.closeActiveEditor',
-              document.uri,
-            );
+            // Check if the current tab is pinned before closing it
+            const isPinned = await isTabPinned(document.uri);
+            if (isPinned) {
+              console.log(`Skipping close for pinned file: ${filename}`);
+              continue;
+            }
+
+            // Close the editor
+            try {
+              await vscode.commands.executeCommand(
+                'workbench.action.closeActiveEditor',
+                document.uri,
+              );
+              console.log(`Closed editor for: ${filename}`);
+            } catch (closeError) {
+              console.error(`Error closing editor for ${filename}:`, closeError);
+            }
           }
         } catch (exception) {
           console.log(`Could not format file ${file}`);
@@ -273,4 +310,37 @@ function formatAllFiles(files: string[]) {
       }
     },
   );
+}
+
+// Function to check if a tab is pinned
+async function isTabPinned(uri: vscode.Uri): Promise<boolean> {
+  try {
+    // Get all tab groups
+    const tabGroups = vscode.window.tabGroups;
+
+    // Check all groups for the tab with matching URI
+    for (const group of tabGroups.all) {
+      for (const tab of group.tabs) {
+        // Type guard for tab input with URI
+        const hasUri = (input: unknown): input is { uri: vscode.Uri } =>
+          typeof input === 'object' && input !== null && 'uri' in input;
+
+        // Check if this tab represents our document
+        if (tab.input && hasUri(tab.input)) {
+          // Compare URIs using fsPath for more reliable comparison
+          const tabPath = tab.input.uri.fsPath;
+          const docPath = uri.fsPath;
+
+          if (tabPath === docPath) {
+            console.log(`Tab for ${docPath} is ${tab.isPinned ? 'pinned' : 'not pinned'}`);
+            return tab.isPinned || false;
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error checking if tab is pinned:', error);
+  }
+
+  return false;
 }

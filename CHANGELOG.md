@@ -1,5 +1,10 @@
 # Pro Formatter Change Log
 
+## Version 1.2.0: May 25, 2025
+
+- **Bugfix**: Dont close pinned tabs
+- **Bugfix**: Ignore gitingore files
+
 ## Version 1.1.0: Feb 14, 2024
 
 - **Info**: Added node_modules to default exclude

@@ -34,7 +34,6 @@ let includePattern: string[] = DEFAULT_INCLUDE_PATTERN;
 let saveAfterFormat: boolean = DEFAULT_SAVE_FORMAT;
 let closeAfterSave: boolean = DEFAULT_CLOSE_FORMAT;
 
-let workspaceFolder: string | undefined;
 export const EXTENSION_NAME = 'Workspace_Formatter';
 
 export let extensionContext: vscode.ExtensionContext | undefined;
@@ -54,10 +53,6 @@ export function activate(context: vscode.ExtensionContext) {
     !vscode.workspace.workspaceFolders[0].uri
   ) {
     return;
-  }
-
-  if (vscode.workspace.workspaceFolders.length === 1) {
-    workspaceFolder = vscode.workspace.workspaceFolders[0].uri.fsPath;
   }
 
   extensionContext = context;
@@ -162,13 +157,20 @@ function initRunStatusBar() {
   commandRunDisposable = vscode.commands.registerCommand(
     commandName,
     async () => {
-      if (!workspaceFolder) return;
+      const folders = vscode.workspace.workspaceFolders;
+      if (!folders || folders.length === 0) return;
 
-      const files = getAllFiles(workspaceFolder);
+      const allFiles: string[] = [];
+      for (const folder of folders) {
+        const files = getAllFiles(folder.uri.fsPath);
+        if (files) {
+          allFiles.push(...files);
+        }
+      }
 
-      if (!files) return;
+      if (allFiles.length === 0) return;
 
-      formatAllFiles(files);
+      formatAllFiles(allFiles);
     },
   );
 
@@ -192,7 +194,8 @@ function getAllFiles(startingDirectory: string) {
   console.log(`Getting all files from: ${startingDirectory}`);
 
   // Get workspace root for .gitignore filtering
-  const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '';
+  const workspaceRoot =
+    vscode.workspace.getWorkspaceFolder(vscode.Uri.file(startingDirectory))?.uri.fsPath || '';
 
   // Get all directories recursively
   let allDirectories = getDirectoriesRecursive(

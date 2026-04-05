@@ -4,6 +4,7 @@ out/
 build/
 .mypy_cache
 .vscode-test
+.claude
 
 test/testAssets/
 

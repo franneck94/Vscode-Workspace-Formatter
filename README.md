@@ -1,10 +1,8 @@
-# VSCode Workspace Formatter
+# VSCode Workspace Formatter Multiple (Fork)
+
+> **This is a fork of [Vscode-Workspace-Formatter](https://github.com/franneck94/Vscode-Workspace-Formatter) by [Jan Schaffranek (franneck94)](https://github.com/franneck94).**
 
 🔧 Format all your files in a workspace with one click. 🔧
-
-[![Visual Studio Marketplace](https://img.shields.io/visual-studio-marketplace/v/franneck94.workspace-formatter?label=VS%20Marketplace&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=franneck94.workspace-formatter)
-[![Installs](https://img.shields.io/visual-studio-marketplace/i/franneck94.workspace-formatter?label=Installs)](https://marketplace.visualstudio.com/items?itemName=franneck94.workspace-formatter)
-[![License](https://img.shields.io/github/license/franneck94/Vscode-Workspace-Formatter?label=License)](https://github.com/franneck94/Vscode-Workspace-Formatter/blob/master/LICENSE)
 
 You can define include and exclude patterns to manage which files and directories should be formatted.  
 Besides that, you can also select only certain directories to format with the context menu.
@@ -70,8 +68,4 @@ Licensed under the [MIT License](LICENSE).
 
 ## Supporting the Work
 
-Feel free to make a donation, such that i have more time to work on my VSCode extension*s*.
-
-![PayPal QR Code](./media/QR-Code.png)
-
-Or use the Link: <https://www.paypal.com/donate/?hosted_button_id=3WDK6ET99ZQCU>
+This is a fork — I do not accept donations. If you'd like to support this project, please consider donating to the original author, **Jan Schaffranek (franneck94)**

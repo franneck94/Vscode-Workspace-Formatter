@@ -1,9 +1,9 @@
 {
-  "name": "workspace-formatter",
-  "displayName": "Workspace Formatter",
+  "name": "workspace-formatter-multiple",
+  "displayName": "Workspace Formatter Multiple",
   "description": "🔧 Format all your files in a workspace with one click. 🔧",
-  "version": "1.2.2",
-  "publisher": "franneck94",
+  "version": "1.0.0",
+  "publisher": "pedrocmota",
   "license": "MIT",
   "icon": "icon.png",
   "galleryBanner": {
@@ -22,11 +22,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/franneck94/vscode-Workspace-formatter.git"
+    "url": "https://github.com/pedrocmota/vscode-workspace-formatter"
   },
-  "homepage": "https://github.com/franneck94/vscode-Workspace-formatter/README.md",
+  "homepage": "https://github.com/pedrocmota/vscode-workspace-formatter/README.md",
   "bugs": {
-    "url": "https://github.com/franneck94/vscode-Workspace-formatter/issues"
+    "url": "https://github.com/pedrocmota/vscode-workspace-formatter/issues"
   },
   "activationEvents": [
     "onStartupFinished"
@@ -112,6 +112,7 @@
   },
   "devDependencies": {
     "@types/glob": "^7.2.0",
+    "@types/minimatch": "^3.0.5",
     "@types/mocha": "^8.2.3",
     "@types/node": "^14.18.63",
     "@types/vscode": "^1.100.0",
@@ -129,10 +130,10 @@
     "webpack-cli": "^4.6.0"
   },
   "dependencies": {
+    "@vscode/vsce": "^3.6.0",
     "minimatch": "^3.0.4",
     "ts-loader": "9.5.4",
-    "tslint": "5.20.1",
-    "@vscode/vsce": "^3.6.0"
+    "tslint": "5.20.1"
   },
   "extensionDependencies": []
 }
